@@ -1,5 +1,5 @@
 {
-  "name": "ember-cli-deploy-assets-sizes",
+  "name": "ember-cli-deploy-asset-sizes",
   "dependencies": {
     "ember": "~2.6.0",
     "ember-cli-shims": "0.1.1",

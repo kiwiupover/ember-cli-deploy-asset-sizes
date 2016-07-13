@@ -11,14 +11,14 @@ var sendDeployData = function(assets, config) {
     writeKey: config.KEEN_WRITE_KEY
   });
 
-  var pushedAsset = assets.map(function(asset){
+  var pushedAssets = assets.map(function(asset){
     asset.name = asset.name.split(/-[a-f0-9]{32}/ig).join('');
     return asset;
   })
 
   return new Promise(function(resolve, reject) {
 
-    let keenPayload = JSON.stringify({ deploy: pushedAsset });
+    let keenPayload = JSON.stringify({ deploy: pushedAssets });
 
     keen.addEvents(keenPayload, function(err, res) {
       console.log('keen-data', err, res);
@@ -32,24 +32,32 @@ var sendDeployData = function(assets, config) {
 }
 
 module.exports = {
-  name: 'ember-cli-deploy-assets-sizes',
+  name: 'ember-cli-deploy-asset-sizes',
 
   createDeployPlugin: function(options) {
     return {
       name: options.name,
 
       willUpload: function(context) {
+        var emberCliDeployAssetSizesConfig = context.config.emberCliDeployAssetSizes;
+        var outputPath = context.project.root + '/' + context.distDir;
+
         var AssetSizePrinter = require('ember-cli/lib/models/asset-size-printer');
         var sizePrinter = new AssetSizePrinter({
           ui: this.ui,
-          outputPath: context.project.root + '/' + context.distDir
+          outputPath: outputPath
         });
 
-        var emberCliDeployAssetsSizesConfig = context.config.emberCliDeployAssetsSizes;
+        var makeAssetSizesObject
 
-        // TODO add fall back if makeAssetSizesObject is not a function
-        return sizePrinter.makeAssetSizesObject().then(function(assets){
-          return sendDeployData(assets, emberCliDeployAssetsSizesConfig);
+        if (typeof sizePrinter.makeAssetSizesObject !== 'undefined') {
+          makeAssetSizesObject = sizePrinter.makeAssetSizesObject();
+        } else {
+          makeAssetSizesObject = require('./lib/make-asset-sizes-object')(outputPath);
+        }
+
+        return makeAssetSizesObject.then(function(assets){
+          return sendDeployData(assets, emberCliDeployAssetSizesConfig);
         });
       }
     };

@@ -1,26 +1,46 @@
-# Ember-cli-deploy-assets-sizes
+# ember-cli-deploy-asset-sizes
 
-This README outlines the details of collaborating on this Ember addon.
+[WIP]
+
+Keep track of your ember apps asset sizes over time. Each deploy the addon will push your apps assets sizes to [keen.io](https://keen.io).
+
+Use [ember-dashboard](https://github.com/kiwiupover/ember-dashboard) to display your deloy data.
 
 ## Installation
 
-* `git clone` this repository
-* `npm install`
-* `bower install`
+```sh
+ember install ember-cli-deploy-asset-sizes
 
-## Running
+```
 
-* `ember server`
-* Visit your app at http://localhost:4200.
+### Add you keen.io keys
+Add your keen.io key to deploy.js
+
+```js
+module.exports = function(deployTarget) {
+  var ENV = {
+    // truncated for brevity
+    emberCliDeployAssetSizes: {
+      KEEN_PROJECT_ID: <your-keen-project-id>,
+      KEEN_WRITE_KEY: <your-keen-write-key>
+    }
+  };
+
+  // ttruncated for brevity
+  return ENV;
+};
+
+
+```
+## Deploy
+
+```sh
+ember deploy production
+```
 
 ## Running Tests
 
-* `npm test` (Runs `ember try:testall` to test your addon against multiple Ember versions)
-* `ember test`
-* `ember test --server`
+* `npm test` Comming soon! :(
 
-## Building
 
-* `ember build`
-
-For more information on using ember-cli, visit [http://ember-cli.com/](http://ember-cli.com/).
+For more information on using ember-cli-deploy, visit [ember-cli-deploy.com](http://ember-cli-deploy.com/).
