@@ -10,7 +10,6 @@ Use [ember-dashboard](https://github.com/kiwiupover/ember-dashboard) to display 
 
 ```sh
 ember install ember-cli-deploy-asset-sizes
-
 ```
 
 ### Add you keen.io keys
@@ -29,8 +28,6 @@ module.exports = function(deployTarget) {
   // ttruncated for brevity
   return ENV;
 };
-
-
 ```
 ## Deploy
 
