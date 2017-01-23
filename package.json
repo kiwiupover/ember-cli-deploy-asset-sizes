@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-deploy-asset-sizes",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "Keep track of your Ember apps asset sizes over time.",
   "directories": {
     "doc": "doc",
