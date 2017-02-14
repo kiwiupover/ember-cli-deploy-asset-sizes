@@ -1,6 +1,7 @@
 # ember-cli-deploy-asset-sizes
 
-[![Build Status](https://travis-ci.org/kiwiupover/ember-cli-deploy-asset-sizes.svg)](https://travis-ci.org/kiwiupover/ember-cli-deploy-asset-sizes)
+[![Build Status](https://travis-ci.org/kiwiupover/ember-cli-deploy-asset-sizes.svg?branch=master)](https://travis-ci.org/kiwiupover/ember-cli-deploy-asset-sizes)
+
 
 Keep track of your Ember.js apps asset sizes over time. Each deploy the addon will push your apps assets sizes to [keen.io](https://keen.io).
 
