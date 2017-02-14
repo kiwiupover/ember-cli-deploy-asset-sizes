@@ -23,7 +23,6 @@ var sendDeployData = function(assets, options, keen) {
     var keenPayload = JSON.stringify({ deploy: pushedAssets });
 
     keen.addEvents(keenPayload, function(err, res) {
-      console.log('keen-data', err, res);
       if(err) {
         reject(err);
       } else {
