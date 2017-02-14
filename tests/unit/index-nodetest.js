@@ -6,7 +6,7 @@ chai.use(chaiAsPromised);
 
 var assert = chai.assert;
 
-describe('s3 plugin', function() {
+describe('deploy-asset-sizes plugin', function() {
   var subject;
   var mockUi;
   var context;

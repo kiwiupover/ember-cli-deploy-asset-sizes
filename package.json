@@ -45,7 +45,8 @@
   },
   "keywords": [
     "ember-addon",
-    "ember-cli-deploy-plugin"
+    "ember-cli-deploy-plugin",
+    "asset-sizes"
   ],
   "dependencies": {
     "ember-cli-babel": "^5.2.4",
