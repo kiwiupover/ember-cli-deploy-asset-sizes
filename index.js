@@ -1,7 +1,7 @@
 /* jshint node: true */
 'use strict';
 
-var Promise = require('ember-cli/lib/ext/promise');
+var RSVP = require ('rsvp');
 var DeployPluginBase = require('ember-cli-deploy-plugin');
 var path = require('path');
 
@@ -19,7 +19,7 @@ var sendDeployData = function(assets, options, keen) {
     return asset;
   })
 
-  return new Promise(function(resolve, reject) {
+  return new RSVP.Promise(function(resolve, reject) {
     var keenPayload = JSON.stringify({ deploy: pushedAssets });
 
     keen.addEvents(keenPayload, function(err, res) {
