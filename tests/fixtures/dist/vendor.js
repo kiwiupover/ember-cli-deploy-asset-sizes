@@ -1,1 +1,1 @@
-gfd
+window.gfd = 123;

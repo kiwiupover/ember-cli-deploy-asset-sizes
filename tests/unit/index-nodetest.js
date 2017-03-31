@@ -34,10 +34,10 @@ describe('deploy-asset-sizes plugin', function() {
         'asset-sizes': {
           KEEN_PROJECT_ID: 'aaaa',
           KEEN_WRITE_KEY: 'bbbb',
-          projectRoot: function(context) {
+          projectRoot: function() {
             return fakeRoot;
           },
-          distDir: function(context) {
+          distDir: function() {
             return distDir;
           }
         }
@@ -79,7 +79,7 @@ describe('deploy-asset-sizes plugin', function() {
       context.config['asset-sizes'] = {};
 
       plugin.beforeHook(context);
-      assert.throws(function(){
+      assert.throws(function() {
         plugin.configure(context);
       });
     });
@@ -92,7 +92,7 @@ describe('deploy-asset-sizes plugin', function() {
           name: 'asset-sizes'
         });
         plugin.beforeHook(context);
-        assert.throws(function(error){
+        assert.throws(function() {
           plugin.configure(context);
         });
         var messages = mockUi.messages.reduce(function(previous, current) {
@@ -113,7 +113,7 @@ describe('deploy-asset-sizes plugin', function() {
           name: 'asset-sizes'
         });
         plugin.beforeHook(context);
-        assert.throws(function(error){
+        assert.throws(function() {
           plugin.configure(context);
         });
         var messages = mockUi.messages.reduce(function(previous, current) {
@@ -145,14 +145,14 @@ describe('deploy-asset-sizes plugin', function() {
               deploy: [
                 {
                   name: 'frontend.js',
-                  size: 4,
-                  gzipSize: 24,
+                  size: 18,
+                  gzipSize: 38,
                   showGzipped: true
                 },
                 {
                   name: 'vendor.js',
-                  size: 4,
-                  gzipSize: 24,
+                  size: 18,
+                  gzipSize: 38,
                   showGzipped: true
                 }
               ]
@@ -176,7 +176,7 @@ describe('deploy-asset-sizes plugin', function() {
 
     it('returns an error message if the upload errors', function() {
       context.config['asset-sizes'].keen = {
-        configure: function(credentials) {
+        configure: function() {
           return this;
         },
         addEvents: function(payload, callback) {
