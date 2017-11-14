@@ -1,6 +1,6 @@
 'use strict';
 
-var chai  = require('chai');
+var chai = require('chai');
 var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 
@@ -22,7 +22,8 @@ describe('deploy-asset-sizes plugin', function() {
   beforeEach(function() {
     mockUi = {
       messages: [],
-      write: function() {},
+      write: function() {
+      },
       writeLine: function(message) {
         this.messages.push(message);
       }
@@ -145,14 +146,14 @@ describe('deploy-asset-sizes plugin', function() {
               deploy: [
                 {
                   name: 'frontend.js',
-                  size: 18,
-                  gzipSize: 38,
+                  size: 19,
+                  gzipSize: 39,
                   showGzipped: true
                 },
                 {
                   name: 'vendor.js',
-                  size: 18,
-                  gzipSize: 38,
+                  size: 19,
+                  gzipSize: 39,
                   showGzipped: true
                 }
               ]
@@ -190,6 +191,40 @@ describe('deploy-asset-sizes plugin', function() {
 
       plugin.beforeHook(context);
       return assert.isRejected(plugin.willUpload(context));
+    });
+
+    it('allows overwriting of sendDeployData function', function(done) {
+      context.config['asset-sizes'].sendDeployData = function(assets) {
+        assert.equal(
+          JSON.stringify(assets),
+          JSON.stringify(
+            [
+              {
+                name: 'C:/projects/ember-cli-deploy-asset-sizes/tests/fixtures/dist/frontend-f8762e8292688aff9187bf2f37595888.js',
+                size: 19,
+                gzipSize: 39,
+                showGzipped: true
+              },
+              {
+                name: 'C:/projects/ember-cli-deploy-asset-sizes/tests/fixtures/dist/vendor.js',
+                size: 19,
+                gzipSize: 39,
+                showGzipped: true
+              }
+            ]
+          )
+        );
+      };
+
+      var plugin = subject.createDeployPlugin({
+        name: 'asset-sizes'
+      });
+
+      plugin.beforeHook(context);
+      assert.isFulfilled(plugin.willUpload(context))
+        .then(function() {
+          done();
+        });
     });
   });
 });

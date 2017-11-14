@@ -22,6 +22,23 @@ ENV['asset-sizes'] = {
   KEEN_WRITE_KEY: <your-keen-write-key>
 };
 ```
+
+### Customize tracking
+
+By default, this will use the keen.io dependency, together with KEEN_PROJECT_ID & KEEN_WRITE_KEY, 
+to track the file sizes.
+
+However, if you require custom functionality, you can configure your own `sendDeployData` function:
+
+```js
+ENV['asset-sizes'] = {
+  sendDeployData(assets, options) {
+    // Manually do something with the assets
+    // 'assets' is an array of objects with 'name', 'size' and 'gzipSize'
+  }
+}
+```
+
 ## Deploy
 
 ```sh

@@ -1,7 +1,7 @@
 /* jshint node: true */
 'use strict';
 
-var RSVP = require ('rsvp');
+var RSVP = require('rsvp');
 var DeployPluginBase = require('ember-cli-deploy-plugin');
 var path = require('path');
 
@@ -23,7 +23,7 @@ var sendDeployData = function(assets, options, keen) {
     var keenPayload = JSON.stringify({ deploy: pushedAssets });
 
     keen.addEvents(keenPayload, function(err, res) {
-      if(err) {
+      if (err) {
         reject(err);
       } else {
         resolve(res);
@@ -69,8 +69,12 @@ module.exports = {
         });
         var makeAssetSizesObject = sizePrinter.makeAssetSizesObject();
 
+        // this.readConfig('sendDeployData') will automatically call the function
+        // Instead, we take it from the pluginConfig
+        var sendDeployDataFunction = this.pluginConfig.sendDeployData || sendDeployData;
+
         return makeAssetSizesObject.then(function(assets) {
-          return sendDeployData(assets, options, keen);
+          return sendDeployDataFunction(assets, options, keen);
         });
       }
     });
