@@ -1,7 +1,8 @@
 'use strict';
 
+var path = require('path');
 var chai = require('chai');
-var chaiAsPromised = require("chai-as-promised");
+var chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
 
 var assert = chai.assert;
@@ -146,14 +147,14 @@ describe('deploy-asset-sizes plugin', function() {
               deploy: [
                 {
                   name: 'frontend.js',
-                  size: 19,
-                  gzipSize: 39,
+                  size: 18,
+                  gzipSize: 38,
                   showGzipped: true
                 },
                 {
                   name: 'vendor.js',
-                  size: 19,
-                  gzipSize: 39,
+                  size: 18,
+                  gzipSize: 38,
                   showGzipped: true
                 }
               ]
@@ -195,25 +196,23 @@ describe('deploy-asset-sizes plugin', function() {
 
     it('allows overwriting of sendDeployData function', function(done) {
       context.config['asset-sizes'].sendDeployData = function(assets) {
-        assert.equal(
-          JSON.stringify(assets),
-          JSON.stringify(
-            [
-              {
-                name: 'C:/projects/ember-cli-deploy-asset-sizes/tests/fixtures/dist/frontend-f8762e8292688aff9187bf2f37595888.js',
-                size: 19,
-                gzipSize: 39,
-                showGzipped: true
-              },
-              {
-                name: 'C:/projects/ember-cli-deploy-asset-sizes/tests/fixtures/dist/vendor.js',
-                size: 19,
-                gzipSize: 39,
-                showGzipped: true
-              }
-            ]
-          )
+        const frontend = assets[0];
+        assert.notEqual(
+          frontend.name.indexOf('/ember-cli-deploy-asset-sizes/tests/fixtures/dist/frontend-f8762e8292688aff9187bf2f37595888.js'),
+          -1
         );
+        assert.equal(frontend.showGzipped, true);
+        assert.equal(frontend.size, 18);
+        assert.equal(frontend.gzipSize, 38);
+
+        const vendor = assets[1];
+        assert.notEqual(
+          vendor.name.indexOf('/ember-cli-deploy-asset-sizes/tests/fixtures/dist/vendor.js'),
+          -1
+        );
+        assert.equal(vendor.showGzipped, true);
+        assert.equal(vendor.size, 18);
+        assert.equal(vendor.gzipSize, 38);
       };
 
       var plugin = subject.createDeployPlugin({
